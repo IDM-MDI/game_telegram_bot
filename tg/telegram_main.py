@@ -1,11 +1,10 @@
 import logging
+import os
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
-
+from dotenv import load_dotenv
 from parser import epic_parser
-
-bot_token = 'YOUR_TOKEN'
 
 # Enable logging
 logging.basicConfig(
@@ -46,7 +45,9 @@ async def __echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 def telegram_start() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token(bot_token).build()
+    load_dotenv('.env')
+
+    application = Application.builder().token(os.getenv('token')).build()
 
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", __start))
