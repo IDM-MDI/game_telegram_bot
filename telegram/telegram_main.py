@@ -1,8 +1,5 @@
 import logging
-import schedule
-from pyxtension.streams import stream
 
-from model import game
 from telegram import ForceReply, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from parser import epic_parser
