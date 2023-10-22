@@ -14,37 +14,30 @@ def parse() -> list:
         response.raise_for_status()
         soup = BeautifulSoup(response.content, "html.parser")
         data = json.loads(soup.prettify())
-        return stream(data.get('data').get('Catalog').get('searchStore').get('elements')).map(get_game).toList()
+        return stream(data.get('data').get('Catalog').get('searchStore').get('elements')).map(__get_game).toList()
     except Exception as e:
         print(e)
 
 
-def get_game(elements) -> Game:
-    if not isinstance(elements, dict):
-        raise ValueError("'elements' param must be dict")
-
-    dates = get_dates(elements)
+def __get_game(elements: dict) -> Game:
+    dates = __get_dates(elements)
     return Game(title=elements.get('title'),
                 description=elements.get('description'),
                 original_price=elements.get('price').get('totalPrice').get('fmtPrice').get('originalPrice'),
-                img=find_thumbnail_img(elements.get('keyImages')),
+                img=__find_thumbnail_img(elements.get('keyImages')),
                 from_date=dates.get('startDate'),
                 to_date=dates.get('endDate')
                 )
 
 
-def find_thumbnail_img(elements) -> str:
-    if not isinstance(elements, list):
-        raise ValueError("'elements' param must be list")
+def __find_thumbnail_img(elements: list) -> str:
     return stream(elements) \
         .filter(lambda element: element.get('type') == 'OfferImageWide') \
         .map(lambda element: element.get('url')) \
         .toList()[0]
 
 
-def get_dates(elements) -> dict:
-    if not isinstance(elements, dict):
-        raise ValueError("'elements' param must be dict")
+def __get_dates(elements: dict) -> dict:
     promotions = elements.get('promotions')
     if promotions is None:
         return {'startDate': '0', 'endDate': '0'}
