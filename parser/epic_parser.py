@@ -52,6 +52,3 @@ def get_dates(elements) -> dict:
         return promotions.get('promotionalOffers')[0].get('promotionalOffers')[0]
     return promotions.get('upcomingPromotionalOffers')[0].get('promotionalOffers')[0]
 
-
-if __name__ == "__main__":
-    parse()
