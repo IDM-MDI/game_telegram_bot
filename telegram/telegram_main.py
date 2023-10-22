@@ -7,7 +7,7 @@ from telegram import ForceReply, Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from parser import epic_parser
 
-bot_token = '6183160754:AAH3q5WOOTp1Ucrorqb-LABPmhCilmMoSHw'
+bot_token = ''
 
 # Enable logging
 logging.basicConfig(
