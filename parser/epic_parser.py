@@ -20,6 +20,7 @@ class EpicParser(AbstractParser):
         except Exception as e:
             print(e)
 
+    @staticmethod
     def __get_game(self, elements: dict) -> model.Game:
         dates = self.__get_dates(elements)
         return model.Game(title=elements.get('title'),
@@ -30,13 +31,15 @@ class EpicParser(AbstractParser):
                           to_date=dates.get('endDate')
                           )
 
-    def __find_thumbnail_img(self, elements: list) -> str:
+    @staticmethod
+    def __find_thumbnail_img(elements: list) -> str:
         return stream(elements) \
             .filter(lambda element: element.get('type') == 'OfferImageWide') \
             .map(lambda element: element.get('url')) \
             .toList()[0]
 
-    def __get_dates(self, elements: dict) -> dict:
+    @staticmethod
+    def __get_dates(elements: dict) -> dict:
         promotions = elements.get('promotions')
         if promotions is None:
             return {'startDate': '0', 'endDate': '0'}
