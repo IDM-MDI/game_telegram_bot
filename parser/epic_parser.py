@@ -3,7 +3,7 @@ import model
 import requests
 from bs4 import BeautifulSoup
 from pyxtension.streams import stream
-from .AbstractParser import AbstractParser
+from .abstract_parser import AbstractParser
 
 
 class EpicParser(AbstractParser):
