@@ -1,9 +1,4 @@
-from tg import telegram_main
-
-
-def main():
-    telegram_main.telegram_start()
-
+import tg
 
 if __name__ == '__main__':
-    main()
+    tg.telegram_start()

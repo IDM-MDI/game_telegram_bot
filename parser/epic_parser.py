@@ -3,10 +3,11 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from pyxtension.streams import stream
-from model.game import Game
+import model
 
-url = "https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=BY&allowCountries=BY"
-
+url = "https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=BY" \
+      "&allowCountries=BY"
+__all__ = ['parse']
 
 def parse() -> list:
     try:
@@ -19,15 +20,15 @@ def parse() -> list:
         print(e)
 
 
-def __get_game(elements: dict) -> Game:
+def __get_game(elements: dict) -> model.Game:
     dates = __get_dates(elements)
-    return Game(title=elements.get('title'),
-                description=elements.get('description'),
-                original_price=elements.get('price').get('totalPrice').get('fmtPrice').get('originalPrice'),
-                img=__find_thumbnail_img(elements.get('keyImages')),
-                from_date=dates.get('startDate'),
-                to_date=dates.get('endDate')
-                )
+    return model.Game(title=elements.get('title'),
+                      description=elements.get('description'),
+                      original_price=elements.get('price').get('totalPrice').get('fmtPrice').get('originalPrice'),
+                      img=__find_thumbnail_img(elements.get('keyImages')),
+                      from_date=dates.get('startDate'),
+                      to_date=dates.get('endDate')
+                      )
 
 
 def __find_thumbnail_img(elements: list) -> str:
@@ -44,4 +45,3 @@ def __get_dates(elements: dict) -> dict:
     elif not promotions.get('upcomingPromotionalOffers'):
         return promotions.get('promotionalOffers')[0].get('promotionalOffers')[0]
     return promotions.get('upcomingPromotionalOffers')[0].get('promotionalOffers')[0]
-

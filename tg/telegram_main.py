@@ -1,10 +1,12 @@
 import logging
 import os
+import parser
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from dotenv import load_dotenv
-from parser import epic_parser
+
+__all__ = ['telegram_start']
 
 # Enable logging
 logging.basicConfig(
@@ -21,7 +23,7 @@ logger = logging.getLogger(__name__)
 async def __start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     await update.message.reply_text("Hello, this is Test Application for Epic Games News")
-    for game_element in epic_parser.parse():
+    for game_element in parser.parse():
         await update.message.reply_text(
             f"Title: {game_element.get_title()}\n"
             f"Description: {game_element.get_description()}\n"
