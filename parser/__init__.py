@@ -1,1 +1,1 @@
-from .epic_parser import parse
+from .epic_parser import EpicParser

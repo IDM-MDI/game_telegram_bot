@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 async def __start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     await update.message.reply_text("Hello, this is Test Application for Epic Games News")
-    for game_element in parser.parse():
+    for game_element in parser.EpicParser().parse():
         await update.message.reply_text(
             f"Title: {game_element.get_title()}\n"
             f"Description: {game_element.get_description()}\n"
